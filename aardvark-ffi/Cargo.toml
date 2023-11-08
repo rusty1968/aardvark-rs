@@ -1,0 +1,15 @@
+[package]
+name = "aardvark-ffi"
+version = "0.1.0"
+edition = "2021"
+links = "aardvark"
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[build-dependencies]
+bindgen = "0.68.1"
+
+[dependencies]
+libc = "0.2.149"
+libloading = "0.8.1"
+cfg-if = "1.0.0"
+anyhow = "1.0.75"
