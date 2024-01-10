@@ -11,7 +11,7 @@ cfg_if::cfg_if! {
 }
 use libc::{c_char, c_int, c_uint};
 use libloading::Library;
-use std::error::Error;
+use std::{error::Error, path::Path};
 
 use std::ffi::CStr;
 use std::fmt;

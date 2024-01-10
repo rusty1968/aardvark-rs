@@ -9,6 +9,7 @@ dependencies = [
  "anyhow",
  "bindgen",
  "cfg-if",
+ "embedded-hal",
  "libc",
  "libloading 0.8.1",
 ]
@@ -19,7 +20,6 @@ version = "0.1.0"
 dependencies = [
  "aardvark-ffi",
  "anyhow",
- "embedded-hal",
 ]
 
 [[package]]

@@ -1,5 +1,7 @@
 #![allow(dead_code)]
-pub mod plugin;
+pub mod error;
+pub mod i2c;
+pub(crate) mod plugin;
 
 pub use plugin::{Aardvark, AardvarkApi, AardvarkError};
 
