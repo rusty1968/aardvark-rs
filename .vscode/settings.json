@@ -1,0 +1,6 @@
+{
+    "rust-analyzer.linkedProjects": [
+        "./aardvark-ffi/Cargo.toml",
+        "./aardvark-ffi/Cargo.toml"
+    ]
+}

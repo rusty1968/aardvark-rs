@@ -1,5 +1,5 @@
-use aardvark_ffi::plugin::AardvarkError;
-use aardvark_ffi::AardvarkHandle;
+use crate::AardvarkError;
+use crate::AardvarkHandle;
 use embedded_hal::i2c::ErrorType;
 use embedded_hal::i2c::{I2c, Operation as I2cOperation, SevenBitAddress, TenBitAddress};
 use std::fmt;

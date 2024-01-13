@@ -10,9 +10,7 @@ dependencies = [
  "bindgen 0.68.1",
  "cc",
  "cfg-if",
- "embedded-hal",
  "libc",
- "libloading",
 ]
 
 [[package]]
@@ -22,6 +20,7 @@ dependencies = [
  "aardvark-ffi",
  "anyhow",
  "bindgen 0.69.2",
+ "embedded-hal",
 ]
 
 [[package]]

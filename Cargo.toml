@@ -8,6 +8,8 @@ edition = "2021"
 [dependencies]
 aardvark-ffi = { path = "aardvark-ffi" }
 anyhow = "1.0.75"
+embedded-hal = "1.0.0-alpha.1"
+
 
 [build-dependencies]
 bindgen = "*"

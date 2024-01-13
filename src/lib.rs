@@ -1,13 +1,9 @@
-use aardvark::find_and_open_first_unused_device;
-pub use aardvark::i2c::I2CDevice;
-use aardvark_ffi as aardvark;
+use aardvark_ffi::Aardvark;
 
-use anyhow::Result;
+#[derive(Clone, Debug)]
+pub struct AardvarkHandle(Aardvark);
 
-pub fn open_i2c() -> Result<aardvark::i2c::I2CDevice> {
-    let aardvark = find_and_open_first_unused_device()?;
+pub mod error;
+pub mod i2c;
 
-    aardvark.aa_i2c_bitrate(400)?;
-
-    Ok(I2CDevice::new(aardvark))
-}
+pub use error::AardvarkError;

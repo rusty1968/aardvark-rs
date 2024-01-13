@@ -12,11 +12,11 @@ fn main() {
     println!("cargo:rerun-if-changed=wrapper.h");
 
     let bindings = bindgen::Builder::default()
-    .layout_tests(true)
-    .header("wrapper.h")
-    .clang_arg("-I./include")
-    .generate()
-    .expect("Unable to generate bindings");
+        .layout_tests(true)
+        .header("wrapper.h")
+        .clang_arg("-I./include")
+        .generate()
+        .expect("Unable to generate bindings");
 
     let out_path = PathBuf::from(env::var("OUT_DIR").unwrap());
     bindings
@@ -28,11 +28,13 @@ fn main() {
     // Compile the C source file to generate aardvark.o
     cc::Build::new()
         .file("src/aardvark.c") // Specify the C source file
-        .out_dir(out_dir.clone())  
+        .out_dir(out_dir.clone())
         .include("include")
-        .compile("aardvark"); 
+        .compile("aardvark");
 
-    Command::new("ar").args(&["crus", "libaardvark.a", "aarvark.o"])
-    .current_dir(&Path::new(&out_dir))
-    .status().unwrap();    
+    Command::new("ar")
+        .args(&["crus", "libaardvark.a", "aarvark.o"])
+        .current_dir(&Path::new(&out_dir))
+        .status()
+        .unwrap();
 }
