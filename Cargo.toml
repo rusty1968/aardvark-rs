@@ -8,3 +8,6 @@ edition = "2021"
 [dependencies]
 aardvark-ffi = { path = "aardvark-ffi" }
 anyhow = "1.0.75"
+
+[build-dependencies]
+bindgen = "*"

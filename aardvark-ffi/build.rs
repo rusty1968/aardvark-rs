@@ -1,11 +1,27 @@
+extern crate bindgen;
+
 use std::env;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use std::process::Command;
+
 fn main() {
     println!("cargo:rerun-if-changed=build.rs");
 
     let out_dir = env::var("OUT_DIR").unwrap();
 
+    println!("cargo:rerun-if-changed=wrapper.h");
+
+    let bindings = bindgen::Builder::default()
+    .layout_tests(true)
+    .header("wrapper.h")
+    .clang_arg("-I./include")
+    .generate()
+    .expect("Unable to generate bindings");
+
+    let out_path = PathBuf::from(env::var("OUT_DIR").unwrap());
+    bindings
+        .write_to_file(out_path.join("bindings.rs"))
+        .expect("Couldn't write bindings!");
 
     // Tell Cargohat if the given file changes, to rerun this build script.
     println!("cargo:rerun-if-changed=src/aardvark.c");
@@ -14,7 +30,7 @@ fn main() {
         .file("src/aardvark.c") // Specify the C source file
         .out_dir(out_dir.clone())  
         .include("include")
-        .compile("aardvark"); // Name the output library "aardvark"
+        .compile("aardvark"); 
 
     Command::new("ar").args(&["crus", "libaardvark.a", "aarvark.o"])
     .current_dir(&Path::new(&out_dir))
