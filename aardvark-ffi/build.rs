@@ -1,6 +1,7 @@
 extern crate bindgen;
 
 use std::env;
+use std::fs;
 use std::path::{Path, PathBuf};
 use std::process::Command;
 
@@ -10,6 +11,11 @@ fn main() {
     let out_dir = env::var("OUT_DIR").unwrap();
 
     println!("cargo:rerun-if-changed=wrapper.h");
+
+    // Copy aardvark.so from dynamic-lib to OUT_DIR
+    let src_path = Path::new("dynamic-lib/aardvark.so");
+    let dest_path = Path::new(&out_dir).join("aardvark.so");
+    fs::copy(src_path, dest_path).expect("Failed to copy aardvark.so to OUT_DIR");
 
     let bindings = bindgen::Builder::default()
         .layout_tests(true)

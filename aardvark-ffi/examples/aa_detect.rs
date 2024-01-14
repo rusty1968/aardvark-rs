@@ -41,7 +41,7 @@ fn main() {
             let b = unique_id % 1000000_u32;
 
             // Display device port number, in-use status, and serial number
-            println!("    port{} {} {} {}", device, status, a, b,);
+            println!("    port {} {} {} {}", device, status, a, b,);
         }
     }
 }

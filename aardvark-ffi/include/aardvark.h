@@ -95,7 +95,7 @@ extern "C"
 | DEBUG
  ========================================================================*/
 /* Set the following macro to '1' for debugging */
-#define AA_DEBUG 0
+#define AA_DEBUG 1
 
 /*=========================================================================
 | VERSION

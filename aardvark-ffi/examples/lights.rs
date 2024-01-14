@@ -49,7 +49,15 @@ fn flash_lights(handle: Aardvark) -> i32 {
     // Configure I/O expander lines as outputs
     data_out[0] = 0x03;
     data_out[1] = 0x00;
-    let res = unsafe { aa_i2c_write(handle, 0x38, AardvarkI2cFlags_AA_I2C_NO_FLAGS, 2, data_out.as_mut_ptr()) };
+    let res = unsafe {
+        aa_i2c_write(
+            handle,
+            0x38,
+            AardvarkI2cFlags_AA_I2C_NO_FLAGS,
+            2,
+            data_out.as_mut_ptr(),
+        )
+    };
     if res < 0 {
         return res;
     }
@@ -60,13 +68,21 @@ fn flash_lights(handle: Aardvark) -> i32 {
     }
 
     // Turn lights on in sequence
-    let i = 0xff;
+    println!("Turn lights on in sequence");
+    let mut i = 0xff;
     while i > 0 {
-        let i = (i << 1) & 0xff;
+        i = (i << 1) & 0xff;
         data_out[0] = 0x01;
         data_out[1] = i;
-        let res =
-            unsafe { aa_i2c_write(handle, 0x38, AardvarkI2cFlags_AA_I2C_NO_FLAGS, 2, data_out.as_mut_ptr()) };
+        let res = unsafe {
+            aa_i2c_write(
+                handle,
+                0x38,
+                AardvarkI2cFlags_AA_I2C_NO_FLAGS,
+                2,
+                data_out.as_mut_ptr(),
+            )
+        };
         if res < 0 {
             return res;
         }
@@ -74,15 +90,25 @@ fn flash_lights(handle: Aardvark) -> i32 {
     }
 
     // Leave lights on for 100 ms
+    println!("Leave lights on for 100ms");
     unsafe { aa_sleep_ms(100) };
 
     // Turn lights off in sequence
-    let i = 0x00;
+    println!("Turn lights off in sequence");
+    let mut i = 0x00;
     while i != 0xff {
-        let i = (i << 1) | 0x01;
+        i = (i << 1) | 0x01;
         data_out[0] = 0x01;
         data_out[1] = i;
-        let res = unsafe { aa_i2c_write(handle, 0x38, AardvarkI2cFlags_AA_I2C_NO_FLAGS, 2, data_out.as_mut_ptr()) };
+        let res = unsafe {
+            aa_i2c_write(
+                handle,
+                0x38,
+                AardvarkI2cFlags_AA_I2C_NO_FLAGS,
+                2,
+                data_out.as_mut_ptr(),
+            )
+        };
         if res < 0 {
             return res;
         }
@@ -94,7 +120,15 @@ fn flash_lights(handle: Aardvark) -> i32 {
     // Configure I/O expander lines as inputs
     data_out[0] = 0x03;
     data_out[1] = 0xff;
-    let res = unsafe { aa_i2c_write(handle, 0x38, AardvarkI2cFlags_AA_I2C_NO_FLAGS, 2, data_out.as_mut_ptr()) };
+    let res = unsafe {
+        aa_i2c_write(
+            handle,
+            0x38,
+            AardvarkI2cFlags_AA_I2C_NO_FLAGS,
+            2,
+            data_out.as_mut_ptr(),
+        )
+    };
     if res < 0 {
         return res;
     }
