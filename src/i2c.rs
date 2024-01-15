@@ -1,4 +1,9 @@
 use crate::AardvarkError;
+use crate::AardvarkResult;
+use aardvark_ffi::aa_configure;
+use aardvark_ffi::aa_i2c_bitrate;
+use aardvark_ffi::aa_open;
+use aardvark_ffi::AardvarkConfig;
 use aardvark_ffi::AardvarkI2cFlags;
 use aardvark_ffi::AardvarkI2cFlags_AA_I2C_10_BIT_ADDR;
 use aardvark_ffi::AardvarkI2cFlags_AA_I2C_NO_FLAGS;
@@ -139,6 +144,35 @@ pub fn aardvark_i2c_write(
         )
     };
 
+    if status != 0 {
+        let error = AardvarkError::new(status);
+        return Err(error);
+    }
+    Ok(())
+}
+
+pub fn aardvark_open(port_number: i32) -> Result<(), AardvarkError> {
+    let status = unsafe { aa_open(port_number) };
+    if status != 0 {
+        let error = AardvarkError::new(status);
+        return Err(error);
+    }
+    Ok(())
+}
+
+pub fn aardvark_configure(aardvark: Aardvark, config: AardvarkConfig) -> AardvarkResult<()> {
+    // Ensure that the I2C subsystem is enabled
+    let status = unsafe { aa_configure(aardvark, config) };
+
+    if status != 0 {
+        let error = AardvarkError::new(status);
+        return Err(error);
+    }
+    Ok(())
+}
+
+pub fn aardvark_i2_bitrate(aardvark: i32, bitrate_khz: i32) -> AardvarkResult<()> {
+    let status = unsafe { aa_i2c_bitrate(aardvark, bitrate_khz) };
     if status != 0 {
         let error = AardvarkError::new(status);
         return Err(error);

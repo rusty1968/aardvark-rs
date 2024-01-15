@@ -7,6 +7,8 @@ use aardvark_ffi::aa_status_string;
 #[derive(Debug)]
 pub struct AardvarkError(std::num::NonZeroI32);
 
+pub type AardvarkResult<T> = std::result::Result<T, AardvarkError>;
+
 impl std::error::Error for AardvarkError {}
 impl AardvarkError {
     pub const fn new_from_const(status: c_int) -> Self {
