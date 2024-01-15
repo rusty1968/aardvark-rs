@@ -121,7 +121,7 @@ pub fn aardvark_i2c_read(
         )
     };
 
-    if status != 0 {
+    if status < 0 {
         let error = AardvarkError::new(status);
         return Err(error);
     }
@@ -144,27 +144,27 @@ pub fn aardvark_i2c_write(
         )
     };
 
-    if status != 0 {
+    if status <  0 {
         let error = AardvarkError::new(status);
         return Err(error);
     }
     Ok(())
 }
 
-pub fn aardvark_open(port_number: i32) -> Result<(), AardvarkError> {
-    let status = unsafe { aa_open(port_number) };
-    if status != 0 {
-        let error = AardvarkError::new(status);
+pub fn aardvark_open(port_number: i32) -> AardvarkResult<Aardvark> {
+    let aardvark = unsafe { aa_open(port_number) };
+    if aardvark <= 0 {
+        let error = AardvarkError::new(aardvark);
         return Err(error);
     }
-    Ok(())
+    Ok(aardvark)
 }
 
 pub fn aardvark_configure(aardvark: Aardvark, config: AardvarkConfig) -> AardvarkResult<()> {
     // Ensure that the I2C subsystem is enabled
     let status = unsafe { aa_configure(aardvark, config) };
 
-    if status != 0 {
+    if status < 0 {
         let error = AardvarkError::new(status);
         return Err(error);
     }
@@ -173,7 +173,7 @@ pub fn aardvark_configure(aardvark: Aardvark, config: AardvarkConfig) -> Aardvar
 
 pub fn aardvark_i2_bitrate(aardvark: i32, bitrate_khz: i32) -> AardvarkResult<()> {
     let status = unsafe { aa_i2c_bitrate(aardvark, bitrate_khz) };
-    if status != 0 {
+    if status < 0 {
         let error = AardvarkError::new(status);
         return Err(error);
     }

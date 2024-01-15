@@ -33,7 +33,7 @@ pub fn find_and_open_first_unused_device() -> AardvarkResult<Aardvark> {
     let devices = find_unused_aardvark_devices()?;
 
     if let Some(device) = devices.first() {
-        aardvark_open(*device as i32)?;
+        return aardvark_open(*device as i32);
     }
     Err(AardvarkError::UNABLE_TO_FIND_UNUSED_DEVICE)
 }
